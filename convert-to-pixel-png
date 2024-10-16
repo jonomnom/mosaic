@@ -1,0 +1,45 @@
+from PIL import Image
+from pillow_heif import register_heif_opener
+import os
+print('hihi')
+PIXEL_DIMENSION = 200 
+
+dir_path = './in'
+
+files = [f for f in os.listdir(dir_path) if os.path.isfile(os.path.join(dir_path, f))]
+# print(files)
+# print(files[0])
+# check if file is already copied
+# if file is HEIC then convert to JPEG and copy to out folder, else only copy to out folder, downsize to eighth of original size
+# check if file is already copied
+# if file is HEIC then convert to JPEG and copy to out folder, else only copy to out folder, downsize to eighth of original size
+register_heif_opener()
+i = 0
+for file in files:
+    if file.endswith('MOV'):
+        continue
+    
+    image = Image.open(os.path.join(dir_path, file))
+    
+    pixel_width = min(image.width, image.height)
+    # crop so in the middle
+    if (image.width > image.height):
+        image = image.crop(((image.width - pixel_width) // 2, 0, (image.width + pixel_width) // 2, pixel_width))
+    else:
+        image = image.crop((0, (image.height - pixel_width) // 2, pixel_width, (image.height + pixel_width) // 2))
+
+    image = image.resize((PIXEL_DIMENSION, PIXEL_DIMENSION))
+    image.save(f"./out/{file.split('.')[0]}.png", format="png", quality=80)
+    i+=1
+    if i % 100 == 0:
+        print(i)
+
+
+
+# register_heif_opener()
+
+
+
+# image = Image.open('in/IMG_6845.HEIC')
+
+# image.save('out/IMG_6845.jpg', format="jpeg", quality=95)
