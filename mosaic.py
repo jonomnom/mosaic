@@ -110,6 +110,4 @@ target_image_path = './in/02-inputs/mosaic-target.jpeg'
 tile_image_dir = './out'
 grid_size = (300, 400)  # 50x50 grid cells
 mosaic_image = create_mosaic(target_image_path, tile_image_dir, grid_size)
-# mosaic_image.show()  # To display the result
-mosaic_image.resize((3000 * 5, 4000 * 5)).show()  # To display the result
 mosaic_image.save('mosaic_output.jpg')  # To save the result
